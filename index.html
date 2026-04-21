@@ -1,1 +1,1428 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>$100M Money Models — Alex Hormozi | Panduan Lengkap</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06060b;
+  --surface: #0e0e16;
+  --surface2: #161620;
+  --surface3: #1e1e2c;
+  --gold: #f5c842;
+  --gold2: #e8a800;
+  --gold3: #ffd866;
+  --red: #ff4136;
+  --green: #2ecc71;
+  --blue: #4a9eff;
+  --purple: #9b59ff;
+  --orange: #ff8c42;
+  --cyan: #00d4aa;
+  --pink: #ff6b9d;
+  --text: #e8e8f0;
+  --muted: #7a7a9a;
+  --border: #22223a;
+  --sidebar-w: 280px;
+  --topbar-h: 54px;
+  --radius: 14px;
+  --glow-gold: 0 0 40px rgba(245,200,66,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
 
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.025;
+background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ===== TOPBAR ===== */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--topbar-h);background:rgba(6,6,11,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0;}
+.topbar-toggle{width:var(--topbar-h);height:var(--topbar-h);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:none;color:var(--muted);font-size:18px;flex-shrink:0;transition:color .2s;}
+.topbar-toggle:hover{color:var(--gold);}
+.topbar-brand{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);letter-spacing:3px;text-shadow:0 0 30px rgba(245,200,66,.25);padding:0 16px 0 4px;flex-shrink:0;}
+.topbar-nav{display:flex;align-items:center;gap:2px;overflow-x:auto;flex:1;padding:0 16px 0 4px;scrollbar-width:none;-ms-overflow-style:none;mask-image:linear-gradient(to right,transparent,#000 20px,#000 calc(100% - 24px),transparent);}
+.topbar-nav::-webkit-scrollbar{display:none;}
+.tnav-btn{padding:5px 11px;border-radius:8px;background:none;border:none;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;}
+.tnav-btn:hover{color:var(--text);background:var(--surface2);}
+.tnav-btn.active{color:var(--gold);background:rgba(245,200,66,.08);}
+
+/* ===== SIDEBAR ===== */
+#sidebar{position:fixed;top:var(--topbar-h);left:0;bottom:0;width:var(--sidebar-w);background:rgba(8,8,14,.97);border-right:1px solid var(--border);z-index:150;overflow-y:auto;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+#sidebar.open{transform:translateX(0);}
+#sidebar::-webkit-scrollbar{width:3px;}
+#sidebar::-webkit-scrollbar-thumb{background:var(--border);}
+
+.sb-header{padding:20px 16px 14px;border-bottom:1px solid var(--border);}
+.sb-title{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);opacity:.6;}
+.sb-subtitle{font-size:11px;color:var(--muted);margin-top:2px;}
+
+.sb-section{margin:4px 0;}
+.sb-section-header{display:flex;align-items:center;gap:8px;padding:10px 16px 6px;cursor:pointer;transition:background .15s;}
+.sb-section-header:hover{background:rgba(255,255,255,.02);}
+.sb-section-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sb-section-name{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;}
+.sb-section-chevron{margin-left:auto;font-size:10px;color:var(--muted);transition:transform .2s;}
+.sb-section.open .sb-section-chevron{transform:rotate(90deg);}
+.sb-items{display:none;padding-bottom:4px;}
+.sb-section.open .sb-items{display:block;}
+.sb-item{display:flex;align-items:center;gap:8px;padding:7px 16px 7px 32px;cursor:pointer;transition:all .15s;border-left:2px solid transparent;margin:1px 0;}
+.sb-item:hover{background:rgba(255,255,255,.03);border-left-color:var(--border);}
+.sb-item.active{background:rgba(245,200,66,.05);border-left-color:var(--gold);}
+.sb-item-icon{font-size:12px;flex-shrink:0;width:16px;text-align:center;}
+.sb-item-text{font-size:12px;color:var(--muted);line-height:1.4;flex:1;}
+.sb-item.active .sb-item-text{color:var(--text);}
+
+.sb-progress{padding:14px 16px;border-top:1px solid var(--border);margin-top:8px;}
+.sb-progress-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.sb-progress-bar{height:3px;background:var(--surface3);border-radius:2px;overflow:hidden;}
+.sb-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold3));border-radius:2px;transition:width .5s;}
+.sb-progress-pct{font-size:10px;color:var(--gold);font-family:'DM Mono',monospace;margin-top:4px;}
+
+/* OVERLAY */
+#sidebar-overlay{display:none;position:fixed;inset:0;top:var(--topbar-h);z-index:140;background:rgba(0,0,0,.5);}
+#sidebar-overlay.show{display:block;}
+
+/* ===== MAIN CONTENT ===== */
+#main{margin-top:var(--topbar-h);transition:margin-left .3s;min-height:100vh;}
+
+/* ===== PAGES ===== */
+.page{display:none;animation:fadeIn .3s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.container{max-width:1100px;margin:0 auto;padding:40px 24px;}
+
+/* ===== HERO ===== */
+#hero-section{min-height:calc(100vh - var(--topbar-h));display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 24px;position:relative;overflow:hidden;}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none;}
+.orb1{width:600px;height:600px;background:radial-gradient(circle,rgba(245,200,66,.06) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);}
+.orb2{width:300px;height:300px;background:radial-gradient(circle,rgba(155,89,255,.04) 0%,transparent 70%);top:20%;right:10%;}
+.orb3{width:200px;height:200px;background:radial-gradient(circle,rgba(0,212,170,.03) 0%,transparent 70%);bottom:20%;left:10%;}
+
+.hero-inner{position:relative;z-index:1;max-width:800px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);border-radius:50px;padding:6px 18px;font-size:12px;font-weight:600;color:var(--gold);margin-bottom:28px;}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(60px,12vw,110px);line-height:.88;letter-spacing:4px;margin-bottom:20px;}
+.hero h1 .accent{color:var(--gold);text-shadow:0 0 80px rgba(245,200,66,.2);}
+.hero-sub{font-size:17px;color:var(--muted);max-width:540px;line-height:1.8;margin:0 auto 36px;}
+.hero-stats{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;margin-bottom:36px;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--gold);line-height:1;}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#000;font-weight:700;font-size:15px;padding:14px 32px;border-radius:50px;border:none;cursor:pointer;transition:all .25s;box-shadow:0 4px 30px rgba(245,200,66,.25);}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 40px rgba(245,200,66,.35);}
+
+/* ===== SECTION HEADERS ===== */
+.sec-header{margin-bottom:40px;}
+.sec-tag{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold);background:rgba(245,200,66,.08);padding:4px 14px;border-radius:50px;border:1px solid rgba(245,200,66,.15);margin-bottom:12px;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,50px);letter-spacing:2px;line-height:1.05;}
+.sec-desc{color:var(--muted);font-size:15px;margin-top:10px;line-height:1.7;max-width:620px;}
+
+/* ===== CARDS ===== */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:all .25s;}
+.card:hover{border-color:rgba(245,200,66,.2);transform:translateY(-2px);box-shadow:var(--glow-gold);}
+.card-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 10px;border-radius:50px;margin-bottom:10px;display:inline-block;}
+.tag-gold{background:rgba(245,200,66,.12);color:var(--gold);}
+.tag-red{background:rgba(255,65,54,.12);color:var(--red);}
+.tag-blue{background:rgba(74,158,255,.12);color:var(--blue);}
+.tag-green{background:rgba(46,204,113,.12);color:var(--green);}
+.tag-purple{background:rgba(155,89,255,.12);color:var(--purple);}
+.tag-orange{background:rgba(255,140,66,.12);color:var(--orange);}
+.tag-cyan{background:rgba(0,212,170,.12);color:var(--cyan);}
+.tag-pink{background:rgba(255,107,157,.12);color:var(--pink);}
+.card h3{font-size:17px;font-weight:700;margin-bottom:7px;line-height:1.3;}
+.card p{color:var(--muted);font-size:13px;line-height:1.75;}
+
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;}
+
+/* ===== BIG QUOTE ===== */
+.big-quote{font-family:'Playfair Display',serif;font-size:clamp(20px,3.2vw,30px);line-height:1.35;color:var(--gold);margin:32px 0;text-align:center;opacity:.85;font-style:italic;}
+
+/* ===== DIVIDER ===== */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:40px 0;}
+
+/* ===== CHAPTER SUMMARY CARD ===== */
+.chapter-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;}
+.chapter-head{padding:20px 24px;display:flex;align-items:flex-start;gap:16px;cursor:pointer;user-select:none;transition:background .2s;}
+.chapter-head:hover{background:rgba(255,255,255,.02);}
+.chapter-num{font-family:'Bebas Neue',sans-serif;font-size:42px;line-height:1;flex-shrink:0;width:52px;text-align:center;}
+.chapter-meta{flex:1;}
+.chapter-meta h3{font-size:18px;font-weight:700;margin-bottom:4px;line-height:1.3;}
+.chapter-meta p{font-size:12px;color:var(--muted);}
+.chapter-badge{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:3px 10px;border-radius:50px;flex-shrink:0;}
+.ch-expand{color:var(--muted);font-size:18px;flex-shrink:0;transition:transform .25s;margin-top:4px;}
+.chapter-card.open .ch-expand{transform:rotate(180deg);}
+.chapter-body{display:none;padding:0 24px 24px;border-top:1px solid var(--border);}
+.chapter-card.open .chapter-body{display:block;animation:fadeIn .2s ease;}
+
+.detail-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin:18px 0 8px;}
+.detail-text{font-size:13px;color:var(--muted);line-height:1.8;}
+.detail-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.detail-list li{font-size:13px;color:var(--muted);padding-left:20px;position:relative;line-height:1.6;}
+.detail-list li::before{content:'→';position:absolute;left:0;color:var(--gold);font-size:11px;top:2px;}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px;}
+.detail-box{background:var(--surface2);border-radius:10px;padding:12px 14px;border-left:3px solid;}
+.detail-box .db-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.detail-box .db-text{font-size:12px;color:var(--muted);line-height:1.6;}
+.formula-box{background:var(--surface2);border:1px dashed rgba(245,200,66,.2);border-radius:10px;padding:14px 18px;margin:14px 0;font-family:'DM Mono',monospace;font-size:13px;color:var(--gold);text-align:center;}
+.key-lesson{background:rgba(245,200,66,.05);border:1px solid rgba(245,200,66,.15);border-radius:10px;padding:14px 18px;margin-top:16px;}
+.key-lesson strong{color:var(--gold);font-size:11px;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:5px;}
+.key-lesson p{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* ===== ROADMAP ===== */
+.roadmap-phase{position:relative;margin-bottom:40px;}
+.phase-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.phase-num{font-family:'Bebas Neue',sans-serif;font-size:60px;line-height:1;opacity:.15;}
+.phase-info{}
+.phase-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:3px 12px;border-radius:50px;display:inline-block;margin-bottom:6px;}
+.phase-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;}
+.phase-desc{font-size:13px;color:var(--muted);margin-top:4px;max-width:560px;line-height:1.6;}
+
+.roadmap-steps{display:flex;flex-direction:column;gap:0;}
+.roadmap-step{display:flex;gap:0;position:relative;}
+.step-line{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:44px;}
+.step-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;border:2px solid;margin-top:4px;}
+.step-connector{flex:1;width:2px;background:var(--border);margin:4px 0;}
+.roadmap-step:last-child .step-connector{display:none;}
+.step-content{flex:1;padding:0 0 28px 16px;}
+.step-content h4{font-size:15px;font-weight:700;margin-bottom:5px;line-height:1.3;}
+.step-content p{font-size:13px;color:var(--muted);line-height:1.7;}
+.step-content .step-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.step-tag{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;padding:2px 9px;border-radius:50px;background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+
+.roadmap-connector{display:flex;align-items:center;justify-content:center;gap:12px;margin:8px 0 24px;color:var(--muted);font-size:13px;}
+.roadmap-connector::before,.roadmap-connector::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ===== STAGE CARDS ===== */
+.stage-card{border-radius:var(--radius);padding:24px;margin-bottom:16px;border:1px solid;}
+.stage-flow-badge{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;padding:3px 12px;border-radius:50px;display:inline-block;margin-bottom:12px;}
+.stage-card h3{font-size:20px;font-weight:700;margin-bottom:6px;}
+.stage-card .goal{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6;}
+.stage-offers{display:flex;flex-wrap:wrap;gap:8px;}
+.offer-pill{font-size:11px;font-weight:600;padding:5px 12px;border-radius:8px;border:1px solid;}
+
+/* ===== PRINCIPLE ===== */
+.principle-item{display:flex;gap:14px;align-items:flex-start;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;transition:all .2s;}
+.principle-item:hover{border-color:rgba(245,200,66,.2);}
+.prin-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);opacity:.25;line-height:1;flex-shrink:0;width:44px;}
+.prin-body h4{font-size:14px;font-weight:700;margin-bottom:3px;}
+.prin-body p{font-size:12px;color:var(--muted);line-height:1.65;}
+
+/* ===== REVEAL ANIMATION ===== */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .5s,transform .5s;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+@media(max-width:640px){
+  .hero h1{font-size:56px;}
+  .hero-stats{gap:16px;}
+  .container{padding:24px 16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <button class="topbar-toggle" onclick="toggleSidebar()" title="Toggle Sidebar">☰</button>
+  <div class="topbar-brand">$100M⚡</div>
+  <nav class="topbar-nav">
+    <button class="tnav-btn active" onclick="showPage('ringkasan')">📖 Ringkasan</button>
+    <button class="tnav-btn" onclick="showPage('roadmap')">🗺️ Roadmap</button>
+    <button class="tnav-btn" onclick="showPage('attraction')">🎯 Attraction</button>
+    <button class="tnav-btn" onclick="showPage('upsell')">⬆️ Upsell</button>
+    <button class="tnav-btn" onclick="showPage('downsell')">⬇️ Downsell</button>
+    <button class="tnav-btn" onclick="showPage('continuity')">🔄 Continuity</button>
+    <button class="tnav-btn" onclick="showPage('model')">🏆 Money Model</button>
+  </nav>
+</div>
+
+<!-- SIDEBAR OVERLAY -->
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-header">
+    <div class="sb-title">$100M MONEY MODELS</div>
+    <div class="sb-subtitle">Alex Hormozi — Panduan Interaktif</div>
+  </div>
+
+  <!-- SECTION: RINGKASAN BAB -->
+  <div class="sb-section open" id="sb-intro">
+    <div class="sb-section-header" onclick="toggleSbSection('sb-intro')">
+      <div class="sb-section-dot" style="background:var(--gold)"></div>
+      <span class="sb-section-name" style="color:var(--gold)">📚 Ringkasan Bab</span>
+      <span class="sb-section-chevron">▶</span>
+    </div>
+    <div class="sb-items">
+      <div class="sb-item active" onclick="navTo('ringkasan','ch-start')">
+        <span class="sb-item-icon">🚀</span>
+        <span class="sb-item-text">Start Here — Kisah Hormozi</span>
+      </div>
+      <div class="sb-item" onclick="navTo('ringkasan','ch-s1')">
+        <span class="sb-item-icon">💡</span>
+        <span class="sb-item-text">Section I — Apa itu Money Model?</span>
+      </div>
+      <div class="sb-item" onclick="navTo('ringkasan','ch-s2')">
+        <span class="sb-item-icon">🎯</span>
+        <span class="sb-item-text">Section II — Attraction Offers</span>
+      </div>
+      <div class="sb-item" onclick="navTo('ringkasan','ch-s3')">
+        <span class="sb-item-icon">⬆️</span>
+        <span class="sb-item-text">Section III — Upsell Offers</span>
+      </div>
+      <div class="sb-item" onclick="navTo('ringkasan','ch-s4')">
+        <span class="sb-item-icon">⬇️</span>
+        <span class="sb-item-text">Section IV — Downsell Offers</span>
+      </div>
+      <div class="sb-item" onclick="navTo('ringkasan','ch-s5')">
+        <span class="sb-item-icon">🔄</span>
+        <span class="sb-item-text">Section V — Continuity Offers</span>
+      </div>
+      <div class="sb-item" onclick="navTo('ringkasan','ch-s6')">
+        <span class="sb-item-icon">🏆</span>
+        <span class="sb-item-text">Section VI — Build Money Model</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: ROADMAP -->
+  <div class="sb-section" id="sb-roadmap">
+    <div class="sb-section-header" onclick="toggleSbSection('sb-roadmap')">
+      <div class="sb-section-dot" style="background:var(--cyan)"></div>
+      <span class="sb-section-name" style="color:var(--cyan)">🗺️ Roadmap</span>
+      <span class="sb-section-chevron">▶</span>
+    </div>
+    <div class="sb-items">
+      <div class="sb-item" onclick="navTo('roadmap','phase-foundation')">
+        <span class="sb-item-icon">🏗️</span>
+        <span class="sb-item-text">Fase 1 — Fondasi</span>
+      </div>
+      <div class="sb-item" onclick="navTo('roadmap','phase-attraction')">
+        <span class="sb-item-icon">🧲</span>
+        <span class="sb-item-text">Fase 2 — Dapatkan Pelanggan</span>
+      </div>
+      <div class="sb-item" onclick="navTo('roadmap','phase-monetize')">
+        <span class="sb-item-icon">💰</span>
+        <span class="sb-item-text">Fase 3 — Maksimalkan Revenue</span>
+      </div>
+      <div class="sb-item" onclick="navTo('roadmap','phase-recurr')">
+        <span class="sb-item-icon">♾️</span>
+        <span class="sb-item-text">Fase 4 — Recurring Revenue</span>
+      </div>
+      <div class="sb-item" onclick="navTo('roadmap','phase-scale')">
+        <span class="sb-item-icon">📈</span>
+        <span class="sb-item-text">Fase 5 — Skala & Otomasi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: ATTRACTION -->
+  <div class="sb-section" id="sb-attract">
+    <div class="sb-section-header" onclick="toggleSbSection('sb-attract')">
+      <div class="sb-section-dot" style="background:var(--red)"></div>
+      <span class="sb-section-name" style="color:var(--red)">🎯 Attraction Offers</span>
+      <span class="sb-section-chevron">▶</span>
+    </div>
+    <div class="sb-items">
+      <div class="sb-item" onclick="navTo('attraction','ao-wmb')">
+        <span class="sb-item-icon">💰</span>
+        <span class="sb-item-text">Win Your Money Back</span>
+      </div>
+      <div class="sb-item" onclick="navTo('attraction','ao-giveaway')">
+        <span class="sb-item-icon">🎁</span>
+        <span class="sb-item-text">Giveaways</span>
+      </div>
+      <div class="sb-item" onclick="navTo('attraction','ao-decoy')">
+        <span class="sb-item-icon">🎭</span>
+        <span class="sb-item-text">Decoy Offer</span>
+      </div>
+      <div class="sb-item" onclick="navTo('attraction','ao-bxgy')">
+        <span class="sb-item-icon">🛍️</span>
+        <span class="sb-item-text">Buy X Get Y Free</span>
+      </div>
+      <div class="sb-item" onclick="navTo('attraction','ao-plnpl')">
+        <span class="sb-item-icon">⏳</span>
+        <span class="sb-item-text">Pay Less Now or Pay More Later</span>
+      </div>
+      <div class="sb-item" onclick="navTo('attraction','ao-fgo')">
+        <span class="sb-item-icon">❤️</span>
+        <span class="sb-item-text">Free Goodwill Offer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: UPSELL -->
+  <div class="sb-section" id="sb-up">
+    <div class="sb-section-header" onclick="toggleSbSection('sb-up')">
+      <div class="sb-section-dot" style="background:var(--blue)"></div>
+      <span class="sb-section-name" style="color:var(--blue)">⬆️ Upsell Offers</span>
+      <span class="sb-section-chevron">▶</span>
+    </div>
+    <div class="sb-items">
+      <div class="sb-item" onclick="navTo('upsell','uo-classic')">
+        <span class="sb-item-icon">🏆</span>
+        <span class="sb-item-text">Classic Upsell</span>
+      </div>
+      <div class="sb-item" onclick="navTo('upsell','uo-menu')">
+        <span class="sb-item-icon">📋</span>
+        <span class="sb-item-text">Menu Upsell</span>
+      </div>
+      <div class="sb-item" onclick="navTo('upsell','uo-anchor')">
+        <span class="sb-item-icon">⚓</span>
+        <span class="sb-item-text">Anchor Upsell</span>
+      </div>
+      <div class="sb-item" onclick="navTo('upsell','uo-rollover')">
+        <span class="sb-item-icon">🔄</span>
+        <span class="sb-item-text">Rollover Upsell</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: DOWNSELL -->
+  <div class="sb-section" id="sb-down">
+    <div class="sb-section-header" onclick="toggleSbSection('sb-down')">
+      <div class="sb-section-dot" style="background:var(--purple)"></div>
+      <span class="sb-section-name" style="color:var(--purple)">⬇️ Downsell Offers</span>
+      <span class="sb-section-chevron">▶</span>
+    </div>
+    <div class="sb-items">
+      <div class="sb-item" onclick="navTo('downsell','do-payment')">
+        <span class="sb-item-icon">💳</span>
+        <span class="sb-item-text">Payment Plan Downsell</span>
+      </div>
+      <div class="sb-item" onclick="navTo('downsell','do-trial')">
+        <span class="sb-item-icon">⏱️</span>
+        <span class="sb-item-text">Trial With Penalty</span>
+      </div>
+      <div class="sb-item" onclick="navTo('downsell','do-feature')">
+        <span class="sb-item-icon">🔧</span>
+        <span class="sb-item-text">Feature Downsell</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: CONTINUITY -->
+  <div class="sb-section" id="sb-cont">
+    <div class="sb-section-header" onclick="toggleSbSection('sb-cont')">
+      <div class="sb-section-dot" style="background:var(--green)"></div>
+      <span class="sb-section-name" style="color:var(--green)">🔄 Continuity Offers</span>
+      <span class="sb-section-chevron">▶</span>
+    </div>
+    <div class="sb-items">
+      <div class="sb-item" onclick="navTo('continuity','co-bonus')">
+        <span class="sb-item-icon">🎁</span>
+        <span class="sb-item-text">Continuity Bonus Offers</span>
+      </div>
+      <div class="sb-item" onclick="navTo('continuity','co-discount')">
+        <span class="sb-item-icon">🏷️</span>
+        <span class="sb-item-text">Continuity Discount Offers</span>
+      </div>
+      <div class="sb-item" onclick="navTo('continuity','co-waived')">
+        <span class="sb-item-icon">✨</span>
+        <span class="sb-item-text">Waived Fee Offer</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: MONEY MODEL -->
+  <div class="sb-section" id="sb-mm">
+    <div class="sb-section-header" onclick="toggleSbSection('sb-mm')">
+      <div class="sb-section-dot" style="background:var(--orange)"></div>
+      <span class="sb-section-name" style="color:var(--orange)">💎 Money Model</span>
+      <span class="sb-section-chevron">▶</span>
+    </div>
+    <div class="sb-items">
+      <div class="sb-item" onclick="navTo('model','mm-overview')">
+        <span class="sb-item-icon">🔍</span>
+        <span class="sb-item-text">Overview & Framework</span>
+      </div>
+      <div class="sb-item" onclick="navTo('model','mm-10in10')">
+        <span class="sb-item-icon">⚡</span>
+        <span class="sb-item-text">10 Years in 10 Minutes</span>
+      </div>
+      <div class="sb-item" onclick="navTo('model','mm-examples')">
+        <span class="sb-item-icon">📊</span>
+        <span class="sb-item-text">Contoh Real Bisnis</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sb-progress">
+    <div class="sb-progress-label">Progres Belajar</div>
+    <div class="sb-progress-bar"><div class="sb-progress-fill" id="progress-fill" style="width:14%"></div></div>
+    <div class="sb-progress-pct" id="progress-pct">1 / 7 bagian</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- ===== PAGE: RINGKASAN ===== -->
+<div class="page active" id="page-ringkasan">
+  <section id="hero-section">
+    <div class="hero-orb orb1"></div>
+    <div class="hero-orb orb2"></div>
+    <div class="hero-orb orb3"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">📚 Ringkasan Bab Lengkap — $100M Money Models</div>
+      <h1 class="hero"><span class="accent">$100M</span><br>MONEY<br>MODELS</h1>
+      <p class="hero-sub">Buku pribadi Alex Hormozi tentang cara membangun urutan offer yang menghasilkan lebih banyak uang dalam 30 hari pertama daripada biaya akuisisi pelanggan.</p>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Section Buku</div></div>
+        <div class="stat-item"><div class="stat-num">14</div><div class="stat-label">Jenis Offer</div></div>
+        <div class="stat-item"><div class="stat-num">$200M+</div><div class="stat-label">Revenue Portfolio</div></div>
+        <div class="stat-item"><div class="stat-num">30</div><div class="stat-label">Hari Target Balik Modal</div></div>
+      </div>
+      <button class="btn-primary" onclick="showPage('roadmap')">Lihat Roadmap Lengkap →</button>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <div class="big-quote reveal">"Buat Money Model yang membuat kamu menghasilkan cukup uang di 30 hari pertama sehingga biaya mendapatkan pelanggan tidak pernah jadi masalah lagi."</div>
+
+    <!-- CHAPTER SUMMARIES -->
+    <div class="sec-header reveal">
+      <div class="sec-tag">Ringkasan Detail</div>
+      <h2 class="sec-title">Semua Bab — Dipecah Secara Mendalam</h2>
+      <p class="sec-desc">Klik setiap bab untuk membuka ringkasan detail, inti pelajaran, dan framework yang bisa langsung diterapkan.</p>
+    </div>
+
+    <!-- START HERE -->
+    <div class="chapter-card reveal open" id="ch-start">
+      <div class="chapter-head" onclick="toggleChapter(this)">
+        <div class="chapter-num" style="color:var(--gold)">00</div>
+        <div class="chapter-meta">
+          <h3>Start Here — Dari Tidur di Lantai Gym ke $100M</h3>
+          <p>Kisah nyata Hormozi dan inti mengapa Money Models mengubah segalanya</p>
+        </div>
+        <div class="chapter-badge tag-gold">Prolog</div>
+        <div class="ch-expand">▼</div>
+      </div>
+      <div class="chapter-body">
+        <div class="detail-label">Ringkasan</div>
+        <div class="detail-text">Hormozi memulai dengan tidur di lantai gym pertamanya, hampir bangkrut dalam 30 hari. Seorang pemilik storage unit berusia 27 tahun mengajarinya pelajaran paling berharga: satu pelanggan = banyak pembelian. Taktik "free month of storage" yang sebenarnya menghasilkan $127 mengajarkan Hormozi konsep Money Model pertamanya.</div>
+        
+        <div class="detail-label">Momen Kritis</div>
+        <ul class="detail-list">
+          <li>Gym $39/6 minggu hanya menghasilkan 4 pelanggan — hampir bangkrut</li>
+          <li>Mentor storage unit: "Free first month" sebenarnya = $127 (lock + boxes + insurance + upgrade)</li>
+          <li>Hormozi scale ke 6 gym dalam 2.5 tahun menggunakan Win Your Money Back Offer</li>
+          <li>Seorang marketer berpenghasilan $1M/bulan mengatakan "kamu harusnya tidak menjalankan gym"</li>
+          <li>Sold 5 gym, founded Gym Launch — $43M distribusi dalam 5 tahun, lalu dijual $46.2M</li>
+        </ul>
+
+        <div class="formula-box">ROI Hormozi: Spend $5/lead → Close 25% → Revenue $680/customer dalam 48 jam → 34x ROAS</div>
+
+        <div class="key-lesson">
+          <strong>🔑 Inti Pelajaran</strong>
+          <p>Money Model bukan tentang harga produk — ini tentang <em>urutan</em> penawaran. Pelanggan rental mobil $19 jadi $100 karena 5 offer berurutan yang memecahkan masalah nyata. Kamu tidak perlu satu produk bagus. Kamu perlu sistem.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION I -->
+    <div class="chapter-card reveal" id="ch-s1">
+      <div class="chapter-head" onclick="toggleChapter(this)">
+        <div class="chapter-num" style="color:var(--cyan)">I</div>
+        <div class="chapter-meta">
+          <h3>Section I — Apa itu Money Model?</h3>
+          <p>Definisi, struktur, dan mengapa 99% bisnis punya Money Model yang buruk</p>
+        </div>
+        <div class="chapter-badge tag-cyan">Foundation</div>
+        <div class="ch-expand">▼</div>
+      </div>
+      <div class="chapter-body">
+        <div class="detail-label">Definisi Inti</div>
+        <div class="detail-text">Money Model adalah <strong>urutan offer</strong>. Setiap offer memecahkan masalah spesifik pelanggan pada waktu yang tepat. Seperti rental car story: mereka tidak "hard sell" — mereka menawarkan solusi pada saat pelanggan menyadari masalah. Hasilnya: pelanggan $19 membayar $100.</div>
+
+        <div class="detail-label">4 Tipe Offer dalam Money Model</div>
+        <div class="detail-grid">
+          <div class="detail-box" style="border-color:var(--red)">
+            <div class="db-label" style="color:var(--red)">1. Attraction Offers</div>
+            <div class="db-text">Ubah orang asing jadi pelanggan. Selalu ada elemen gratis atau diskon besar.</div>
+          </div>
+          <div class="detail-box" style="border-color:var(--blue)">
+            <div class="db-label" style="color:var(--blue)">2. Upsell Offers</div>
+            <div class="db-text">Buat pelanggan spend lebih banyak cash. Tawarkan setelah pembelian pertama.</div>
+          </div>
+          <div class="detail-box" style="border-color:var(--purple)">
+            <div class="db-label" style="color:var(--purple)">3. Downsell Offers</div>
+            <div class="db-text">Ubah "tidak" jadi "ya". Bukan diskon — ubah apa yang mereka dapat.</div>
+          </div>
+          <div class="detail-box" style="border-color:var(--green)">
+            <div class="db-label" style="color:var(--green)">4. Continuity Offers</div>
+            <div class="db-text">Buat pelanggan terus bayar. Recurring revenue adalah raja bisnis.</div>
+          </div>
+        </div>
+
+        <div class="detail-label">Mengapa Bad Money Model Membunuh Bisnis</div>
+        <ul class="detail-list">
+          <li>Spend lebih untuk dapat pelanggan daripada yang dihasilkan</li>
+          <li>Potong iklan → sedikit pelanggan → makin sedikit revenue</li>
+          <li>Float bisnis dengan uang pribadi → hutang → jual equity → bangkrut</li>
+          <li>Big companies bisa tahan rugi. UMKM tidak bisa.</li>
+        </ul>
+
+        <div class="formula-box">Target: Cover biaya akuisisi pelanggan dalam 30 hari atau kurang</div>
+
+        <div class="key-lesson">
+          <strong>🔑 Prinsip $100M</strong>
+          <p>Jika kamu bisa cover CAC dalam 30 hari, kamu bisa pakai kartu kredit bebas bunga sebagai modal, lunasi, dan ulang terus. Ini cara Hormozi scale tanpa investor.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION II -->
+    <div class="chapter-card reveal" id="ch-s2">
+      <div class="chapter-head" onclick="toggleChapter(this)">
+        <div class="chapter-num" style="color:var(--red)">II</div>
+        <div class="chapter-meta">
+          <h3>Section II — Attraction Offers</h3>
+          <p>6 cara terbukti mengubah orang asing jadi pelanggan berbayar</p>
+        </div>
+        <div class="chapter-badge tag-red">6 Offer Types</div>
+        <div class="ch-expand">▼</div>
+      </div>
+      <div class="chapter-body">
+        <div class="detail-text" style="margin-bottom:16px;">Attraction Offers selalu ada elemen gratis atau diskon besar. Mereka bukan rugi — mereka adalah <em>investment</em> untuk mendapatkan pelanggan yang kemudian diberi serangkaian upsell.</div>
+
+        <div class="detail-label">1. Win Your Money Back</div>
+        <div class="detail-text" style="margin-bottom:8px;">Deposit uang, capai tujuan, dapatkan kembali sebagai cash atau store credit. Hormozi menghasilkan $1 miliar+ industri-wide dengan offer ini. Hanya 10% yang minta refund. Yang berhasil biasanya stay dan beli lebih banyak.</div>
+        <ul class="detail-list" style="margin-bottom:14px;">
+          <li>Kriteria: mudah dilacak, aligned dengan goals pelanggan, membantu marketing bisnis</li>
+          <li>Store credit &gt; cash refund (konversi sama, tapi pelanggan stay)</li>
+          <li>Semua meeting = peluang upsell. Jadikan meeting part of criteria!</li>
+          <li>Di tengah program: offer upsell seolah mereka sudah menang</li>
+        </ul>
+
+        <div class="detail-label">2. Giveaways</div>
+        <div class="detail-text" style="margin-bottom:8px;">Advertise chance to win grand prize. Winner 1 orang. Semua yang lain dapat "partial scholarship" / promo offer. Genius: orang masuk untuk hadiah, kamu dapat 100s qualified leads yang kemudian kamu konversi.</div>
+        <ul class="detail-list" style="margin-bottom:14px;">
+          <li>Grand prize = apa yang ingin semua orang beli</li>
+          <li>Promo offer = diskon 10-30% dari gross margin untuk semua yang tidak menang</li>
+          <li>Deadline 3-7 hari + countdown + social proof harian = urgensi masif</li>
+        </ul>
+
+        <div class="detail-label">3. Decoy Offer</div>
+        <div class="detail-text" style="margin-bottom:8px;">Buat versi murah/gratis sebagai "umpan" yang membuat pelanggan mau mencoba. Mirip printer: printer murah, tinta mahal. Atau: free consultation yang ujungnya jual package premium.</div>
+
+        <div class="detail-label">4. Buy X Get Y Free</div>
+        <div class="detail-text" style="margin-bottom:8px;">Beli 1 produk, dapat produk lain gratis. Efektif karena "free" membuat orang override keberatan harga. Cek: apakah Y membuat mereka lebih likely pakai X? Lebih baik lagi jika Y memperkenalkan mereka ke kategori produk baru.</div>
+
+        <div class="detail-label">5. Pay Less Now or Pay More Later</div>
+        <div class="detail-text" style="margin-bottom:8px;">Bayar lebih murah sekarang (tapi lock in), atau bayar harga penuh nanti. Contoh: bayar $97 hari ini atau $197 nanti jika kamu mau lanjut. Ini memaksa komitmen awal dengan risiko rendah.</div>
+
+        <div class="detail-label">6. Free Goodwill Offer</div>
+        <div class="detail-text">Give value tanpa meminta apapun dulu. Bangun goodwill, trust, dan desire. Terbaik untuk cold traffic. Contoh: free training, free tool, free consultation tanpa agenda.</div>
+
+        <div class="key-lesson">
+          <strong>🔑 Prinsip Attraction</strong>
+          <p>Semakin besar diskon = semakin besar daya tarik. "Free" adalah diskon terbesar (100%). Tapi kamu tidak rugi — kamu invest untuk mendapatkan pelanggan yang akan diberi upsell. Logic: 0 pelanggan = tidak ada yang bisa di-upsell.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION III -->
+    <div class="chapter-card reveal" id="ch-s3">
+      <div class="chapter-head" onclick="toggleChapter(this)">
+        <div class="chapter-num" style="color:var(--blue)">III</div>
+        <div class="chapter-meta">
+          <h3>Section III — Upsell Offers</h3>
+          <p>4 cara terbukti membuat pelanggan spend lebih banyak setelah pembelian pertama</p>
+        </div>
+        <div class="chapter-badge tag-blue">4 Offer Types</div>
+        <div class="ch-expand">▼</div>
+      </div>
+      <div class="chapter-body">
+        <div class="detail-text" style="margin-bottom:16px;">Upsell dilakukan SETELAH seseorang sudah commit membeli. Momentum psikologis pembelian pertama membuat mereka lebih terbuka. Hormozi: "Pelanggan terbaik adalah yang baru saja beli."</div>
+
+        <div class="detail-label">1. Classic Upsell</div>
+        <div class="detail-text" style="margin-bottom:8px;">Tawarkan lebih banyak dari hal yang sama: lebih banyak unit, ukuran lebih besar, tier lebih tinggi. Rental car story: "Mau truk yang lebih besar?" = classic upsell. Sederhana dan powerful. Bicara masalah → tawarkan solusi → diam dan tunggu jawaban.</div>
+
+        <div class="detail-label">2. Menu Upsell (Prescribe After Diagnosing)</div>
+        <div class="detail-text" style="margin-bottom:8px;">Tunjukkan "menu" pilihan, dari paling mahal ke paling murah. Framework UNSELL: Uncover → Need → Suggest → Explain → Let them decide → Last chance. Selalu tunjukkan opsi paling mahal pertama (price anchoring).</div>
+        <ul class="detail-list" style="margin-bottom:14px;">
+          <li>Unsell first: "Sekarang kamu tidak perlu semua ini, tapi ini yang paling optimal..."</li>
+          <li>A/B test: tawarkan 2 opsi saja — simple tapi efektif</li>
+          <li>Card on file: setelah mereka beli, save kartu mereka untuk renewal otomatis</li>
+        </ul>
+
+        <div class="detail-label">3. Anchor Upsell</div>
+        <div class="detail-text" style="margin-bottom:8px;">Tunjukkan harga sangat tinggi dulu (anchor), lalu turunkan ke harga sebenarnya. Otak manusia membandingkan relatif, bukan absolut. $2000 setelah melihat $10000 terasa "murah".</div>
+
+        <div class="detail-label">4. Rollover Upsell</div>
+        <div class="detail-text" style="margin-bottom:8px;">Gunakan store credit/wins dari sebelumnya untuk "roll over" ke produk/paket lebih besar. Contoh: menang $600 credit → apply ke paket tahunan → bayar $150/bulan bukan $200. Mereka keep paying, kamu keep revenue.</div>
+
+        <div class="key-lesson">
+          <strong>🔑 Prinsip Upsell</strong>
+          <p>Jangan upsell sebelum pembelian pertama selesai secara psikologis. Upsell terbaik memecahkan masalah BERIKUTNYA yang muncul setelah mereka beli produk pertama. Bukan greed — ini service.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION IV -->
+    <div class="chapter-card reveal" id="ch-s4">
+      <div class="chapter-head" onclick="toggleChapter(this)">
+        <div class="chapter-num" style="color:var(--purple)">IV</div>
+        <div class="chapter-meta">
+          <h3>Section IV — Downsell Offers</h3>
+          <p>Ubah "tidak" jadi "ya" tanpa menurunkan harga untuk hal yang sama</p>
+        </div>
+        <div class="chapter-badge tag-purple">3 Offer Types</div>
+        <div class="ch-expand">▼</div>
+      </div>
+      <div class="chapter-body">
+        <div class="detail-text" style="margin-bottom:16px;">Downsell BUKAN diskon untuk produk yang sama. Downsell = ubah APA yang mereka dapat. Kurangi fitur, extend waktu pembayaran, atau offer trial. Tujuan: konversi yang sebelumnya "tidak mau" tanpa devalue produk utama.</div>
+
+        <div class="detail-label">1. Payment Plan Downsell</div>
+        <div class="detail-text" style="margin-bottom:8px;">Tawaran: bayar lebih sedikit sekarang, tapi total lebih banyak. "Tidak bisa $2000 sekarang? Bagaimana dengan $297/bulan selama 8 bulan?" Total jadi $2376 — kamu dapat lebih, mereka dapat kemudahan. Win-win.</div>
+        <ul class="detail-list" style="margin-bottom:14px;">
+          <li>Hormozi 7-step: tanya masalah → empati → present offer → address concern → payment plan → deadline → final close</li>
+          <li>Always charge sedikit lebih untuk admin fee/installment premium</li>
+        </ul>
+
+        <div class="detail-label">2. Trial With Penalty</div>
+        <div class="detail-text" style="margin-bottom:8px;">Trial gratis atau murah, tapi ada "penalty" jika cancel setelah trial. Berbeda dari free trial biasa — ini ada skin in the game. Contoh: bayar $1 sekarang, jika tidak cancel dalam 7 hari, otomatis charged $297. Meningkatkan commitment dan menurunkan churn.</div>
+
+        <div class="detail-label">3. Feature Downsell</div>
+        <div class="detail-text" style="margin-bottom:8px;">Kurangi fitur untuk buat versi lebih murah. Bukan harga lebih murah untuk hal yang sama — ini literally versi lite. Contoh: coaching group vs 1-on-1. Software basic vs premium. Ini biarkan prospek masuk, lalu upsell mereka kemudian.</div>
+
+        <div class="key-lesson">
+          <strong>🔑 Prinsip Downsell</strong>
+          <p>"Terlalu mahal" hampir selalu berarti "terlalu mahal SEKARANG" atau "saya tidak cukup percaya hasilnya." Downsell menyelesaikan keduanya: payment plan atasi "sekarang", trial atasi kepercayaan.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION V -->
+    <div class="chapter-card reveal" id="ch-s5">
+      <div class="chapter-head" onclick="toggleChapter(this)">
+        <div class="chapter-num" style="color:var(--green)">V</div>
+        <div class="chapter-meta">
+          <h3>Section V — Continuity Offers</h3>
+          <p>Buat pelanggan terus membayar — the holy grail of business</p>
+        </div>
+        <div class="chapter-badge tag-green">3 Offer Types</div>
+        <div class="ch-expand">▼</div>
+      </div>
+      <div class="chapter-body">
+        <div class="detail-text" style="margin-bottom:16px;">Continuity adalah recurring revenue — business model yang paling powerful. Setiap bulan dimulai bukan dari nol. Hormozi: "Jual bonusnya, bukan membership-nya." Nilai bulan pertama harus lebih dari harga bayarnya.</div>
+
+        <div class="detail-label">1. Continuity Bonus Offers</div>
+        <div class="detail-text" style="margin-bottom:8px;">Buat bonus bulan pertama senilai 3-5x harga membership. Orang bergabung untuk bonus, stay karena value yang terus ada. Bonus bisa: exclusive content, mastermind access, live calls, early access ke produk baru.</div>
+
+        <div class="detail-label">2. Continuity Discount Offers</div>
+        <div class="detail-text" style="margin-bottom:8px;">Offer diskon besar untuk pre-pay berbulan-bulan atau tahunan. Contoh: bayar 10 bulan, dapat 2 bulan gratis. Kamu dapat cash upfront, pelanggan dapat deal. Cash flow positif untuk tumbuh.</div>
+
+        <div class="detail-label">3. Waived Fee Offer</div>
+        <div class="detail-text" style="margin-bottom:8px;">Hapus setup fee, enrollment fee, atau fee lain jika mereka daftar recurring sekarang. "Biasanya setup fee $500 — tapi jika kamu mulai membership hari ini, kami hapus." Urgency + value dikombinasikan.</div>
+
+        <div class="key-lesson">
+          <strong>🔑 Prinsip Continuity</strong>
+          <p>Churn adalah musuh #1 continuity bisnis. Hindari memberikan semua bonus di awal — spread bonus over time. Tiap bulan harus ada sesuatu yang membuat mereka excited untuk stay. Lifetime Value = harga × rata-rata bulan stay.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION VI -->
+    <div class="chapter-card reveal" id="ch-s6">
+      <div class="chapter-head" onclick="toggleChapter(this)">
+        <div class="chapter-num" style="color:var(--orange)">VI</div>
+        <div class="chapter-meta">
+          <h3>Section VI — Build Your Money Model</h3>
+          <p>Framework "Ten Years in Ten Minutes" — cara Hormozi membangun sistem nyata</p>
+        </div>
+        <div class="chapter-badge tag-orange">Framework</div>
+        <div class="ch-expand">▼</div>
+      </div>
+      <div class="chapter-body">
+        <div class="detail-label">10 Years in 10 Minutes Framework</div>
+        <div class="detail-text" style="margin-bottom:12px;">Hormozi menyusun pengalamannya jadi blueprint yang bisa diimplementasi dalam satu sesi kerja:</div>
+
+        <ul class="detail-list" style="margin-bottom:16px;">
+          <li><strong>Stage I: Get Cash</strong> — Gunakan Attraction Offer untuk dapatkan pelanggan baru. Goal: balik biaya akuisisi dalam 30 hari.</li>
+          <li><strong>Stage II-A: Get More Cash (Upsell)</strong> — Setelah Stage I profitable, tambah Upsell Offer. Maksimalkan revenue per pelanggan.</li>
+          <li><strong>Stage II-B: Get More Cash (Downsell)</strong> — Untuk semua yang bilang "tidak" ke upsell, offer Downsell. Ubah NO jadi YES.</li>
+          <li><strong>Stage III: Get The Most Cash</strong> — Tambah Continuity Offer. Buat pelanggan bayar terus-menerus. Ini emas bisnis.</li>
+        </ul>
+
+        <div class="formula-box">Satu Stage → Reliable → Otomasi → Baru ke Stage Berikutnya</div>
+
+        <div class="detail-label">Prinsip Implementasi</div>
+        <ul class="detail-list">
+          <li>Jangan implementasi semua sekaligus — satu stage dulu sampai konsisten</li>
+          <li>Setiap stage harus proven sebelum ke berikutnya</li>
+          <li>Ukur: CAC, LTV, Churn, Upsell Rate, Revenue per Customer</li>
+          <li>Pelanggan saat ini = asset paling valuable. Selalu punya next offer siap</li>
+          <li>Bisnis terbaik menggunakan semua 4 tipe offer secara bersamaan</li>
+        </ul>
+
+        <div class="key-lesson">
+          <strong>🔑 Final Lesson</strong>
+          <p>Money Model bukan tentang produk. Bukan tentang skill. Ini tentang sistem. Rental car girl dengan $19 mobil mengalahkan jutaan bisnis yang punya produk lebih bagus — karena sistemnya lebih baik. Build the system, then let the system work.</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</div><!-- /page ringkasan -->
+
+<!-- ===== PAGE: ROADMAP ===== -->
+<div class="page" id="page-roadmap">
+  <div class="container">
+    <div class="sec-header reveal" style="margin-top:20px;">
+      <div class="sec-tag">Peta Jalan Implementasi</div>
+      <h2 class="sec-title">Roadmap $100M Money Model</h2>
+      <p class="sec-desc">Dari nol hingga sistem Money Model yang fully operational — ikuti fase demi fase, jangan loncat langkah.</p>
+    </div>
+
+    <div class="big-quote reveal">"Sempurnakan satu stage. Buat reliable. Otomasi. Baru lanjut ke stage berikutnya."</div>
+
+    <!-- PHASE 1: FOUNDATION -->
+    <div class="roadmap-phase reveal" id="phase-foundation">
+      <div class="phase-header">
+        <div class="phase-num" style="color:var(--gold)">01</div>
+        <div class="phase-info">
+          <div class="phase-tag" style="background:rgba(245,200,66,.1);color:var(--gold)">FASE 1 — FONDASI</div>
+          <div class="phase-title">Bangun Fondasi yang Benar</div>
+          <div class="phase-desc">Sebelum membuat offer apapun, pastikan kamu punya fondasi yang kokoh. Banyak bisnis skip langkah ini dan hasilnya Money Model yang bocor.</div>
+        </div>
+      </div>
+      <div class="roadmap-steps">
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--gold);border-color:var(--gold)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Tentukan Dream Customer & Masalah Mereka</h4>
+            <p>Pahami dengan detail: siapa pelanggan ideal, apa pain point terbesar mereka, apa yang mereka mau tapi tidak bisa dapatkan, dan berapa mereka bersedia bayar. Semakin spesifik, semakin powerful offermu.</p>
+            <div class="step-tags"><span class="step-tag">Market Research</span><span class="step-tag">ICP Definition</span><span class="step-tag">Pain Points</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--gold);border-color:var(--gold)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Validasi Core Product/Service</h4>
+            <p>Pastikan produk utamamu benar-benar bekerja dan menghasilkan hasil untuk pelanggan. Win Your Money Back dan offer lainnya hanya work jika produkmu work. Tanpa produk yang solid, semua Money Model akan colapse.</p>
+            <div class="step-tags"><span class="step-tag">Product-Market Fit</span><span class="step-tag">Customer Results</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--gold);border-color:var(--gold)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Hitung Unit Economics Dasar</h4>
+            <p>Cost per lead, conversion rate, average order value, delivery cost per customer. Kamu harus tahu angka-angka ini sebelum bisa membangun Money Model yang profitable. Target: CAC lunas dalam 30 hari.</p>
+            <div class="step-tags"><span class="step-tag">CAC</span><span class="step-tag">LTV</span><span class="step-tag">Break-even Analysis</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-connector reveal">Stage I dimulai di sini</div>
+
+    <!-- PHASE 2: ATTRACTION -->
+    <div class="roadmap-phase reveal" id="phase-attraction">
+      <div class="phase-header">
+        <div class="phase-num" style="color:var(--red)">02</div>
+        <div class="phase-info">
+          <div class="phase-tag" style="background:rgba(255,65,54,.1);color:var(--red)">FASE 2 — STAGE I: GET CASH</div>
+          <div class="phase-title">Dapatkan Pelanggan Pertama</div>
+          <div class="phase-desc">Fokus satu-satunya: dapatkan pelanggan yang membayar kembali biaya akuisisi dalam 30 hari. Gunakan Attraction Offer yang paling sesuai bisnismu.</div>
+        </div>
+      </div>
+      <div class="roadmap-steps">
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--red);border-color:var(--red)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Pilih Attraction Offer yang Tepat</h4>
+            <p>Untuk bisnis yang require continuous effort (gym, coaching, skills): <strong>Win Your Money Back</strong>. Untuk lead generation massal: <strong>Giveaway</strong>. Untuk physical product: <strong>Buy X Get Y Free</strong>. Untuk SaaS/software: <strong>Free Trial</strong> atau <strong>Pay Less Now</strong>.</p>
+            <div class="step-tags"><span class="step-tag">Win Your Money Back</span><span class="step-tag">Giveaway</span><span class="step-tag">Decoy</span><span class="step-tag">BXGY</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--red);border-color:var(--red)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Buat & Jalankan Attraction Offer</h4>
+            <p>Desain offer dengan detail: kriteria win-back, prize value, deadline, dan follow-up sequence. Jalankan di 1 channel dulu. Ukur conversion, CAC, dan hasil pelanggan. Jangan scale sebelum profitable.</p>
+            <div class="step-tags"><span class="step-tag">Copywriting</span><span class="step-tag">Channel Testing</span><span class="step-tag">Conversion Tracking</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--red);border-color:var(--red)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Optimalkan Sampai CAC Lunas ≤30 Hari</h4>
+            <p>Iterate terus sampai kamu bisa recover CAC dalam 30 hari atau kurang. Cek: apakah iklan profitable? Apakah produk deliver hasil? Apakah ada refund issue? Selesaikan semua ini sebelum lanjut ke Stage II.</p>
+            <div class="step-tags"><span class="step-tag">Iteration</span><span class="step-tag">30-Day Payback</span><span class="step-tag">Optimization</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-connector reveal">Stage II dimulai di sini</div>
+
+    <!-- PHASE 3: MONETIZE -->
+    <div class="roadmap-phase reveal" id="phase-monetize">
+      <div class="phase-header">
+        <div class="phase-num" style="color:var(--blue)">03</div>
+        <div class="phase-info">
+          <div class="phase-tag" style="background:rgba(74,158,255,.1);color:var(--blue)">FASE 3 — STAGE II: GET MORE CASH</div>
+          <div class="phase-title">Maksimalkan Revenue Per Pelanggan</div>
+          <div class="phase-desc">Stage I sudah profitable dan reliable. Sekarang tambah Upsell & Downsell untuk ekstrak lebih banyak value dari setiap pelanggan yang masuk.</div>
+        </div>
+      </div>
+      <div class="roadmap-steps">
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--blue);border-color:var(--blue)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Stage II-A: Tambah Upsell Offer</h4>
+            <p>Identifikasi masalah berikutnya yang pelanggan hadapi setelah beli. Buat offer untuk solve itu. Mulai dengan Classic Upsell (lebih banyak dari hal yang sama). Kemudian coba Menu Upsell untuk higher-ticket. Track: Upsell Conversion Rate dan Average Order Value.</p>
+            <div class="step-tags"><span class="step-tag">Classic Upsell</span><span class="step-tag">Menu Upsell</span><span class="step-tag">Anchor Upsell</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--purple);border-color:var(--purple)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Stage II-B: Tambah Downsell Offer</h4>
+            <p>Untuk semua yang decline upsell: tawarkan alternative. Bukan diskon dari harga asli — ubah apa yang mereka dapat. Payment Plan adalah yang paling mudah diimplementasi. Feature Downsell untuk produk complex. Goal: tidak ada yang meninggalkan tanpa membeli sesuatu.</p>
+            <div class="step-tags"><span class="step-tag">Payment Plan</span><span class="step-tag">Feature Downsell</span><span class="step-tag">Trial with Penalty</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--blue);border-color:var(--blue)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Ukur & Optimalkan Revenue Per Customer</h4>
+            <p>Target: Revenue per customer naik 2-3x dari sebelum Stage II. Jika belum tercapai, coba upsell timing berbeda, offer berbeda, atau pricing structure berbeda. Jangan lanjut ke Stage III sebelum ini konsisten.</p>
+            <div class="step-tags"><span class="step-tag">Revenue per Customer</span><span class="step-tag">A/B Testing</span><span class="step-tag">Offer Sequencing</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-connector reveal">Stage III dimulai di sini</div>
+
+    <!-- PHASE 4: RECURRING -->
+    <div class="roadmap-phase reveal" id="phase-recurr">
+      <div class="phase-header">
+        <div class="phase-num" style="color:var(--green)">04</div>
+        <div class="phase-info">
+          <div class="phase-tag" style="background:rgba(46,204,113,.1);color:var(--green)">FASE 4 — STAGE III: GET THE MOST CASH</div>
+          <div class="phase-title">Bangun Recurring Revenue</div>
+          <div class="phase-desc">Holy grail bisnis. Setiap bulan tidak mulai dari nol. Gunakan Continuity Offers untuk lock in pelanggan dalam recurring payment.</div>
+        </div>
+      </div>
+      <div class="roadmap-steps">
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--green);border-color:var(--green)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Desain Continuity Offer</h4>
+            <p>Buat membership/subscription yang memberikan ongoing value. Ingat: jual BONUSNYA, bukan membership-nya. Bonus bulan pertama harus bernilai 3-5x harga membership. Spread bonus over beberapa bulan untuk kurangi churn.</p>
+            <div class="step-tags"><span class="step-tag">Membership Design</span><span class="step-tag">Bonus Stacking</span><span class="step-tag">Retention Planning</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--green);border-color:var(--green)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Integrasikan Continuity ke Money Model</h4>
+            <p>Offer continuity setelah Stage II selesai. Rollover Upsell: gunakan store credit dari win-back untuk transisi ke continuity. Waived Fee: hapus enrollment fee jika mulai hari ini. Discount: bayar 6 bulan, dapat 2 bulan gratis.</p>
+            <div class="step-tags"><span class="step-tag">Rollover Upsell</span><span class="step-tag">Waived Fee</span><span class="step-tag">Discount Offer</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--green);border-color:var(--green)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Kurangi Churn & Tingkatkan LTV</h4>
+            <p>Monitor monthly churn rate. Target: di bawah 5%. Strategi: check-in calls, community building, tease upcoming bonuses, offer loyalty rewards. LTV = harga bulanan ÷ churn rate. Jika churn 5% → avg retention 20 bulan.</p>
+            <div class="step-tags"><span class="step-tag">Churn Reduction</span><span class="step-tag">LTV Optimization</span><span class="step-tag">Retention Calls</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roadmap-connector reveal">Full $100M Money Model aktif</div>
+
+    <!-- PHASE 5: SCALE -->
+    <div class="roadmap-phase reveal" id="phase-scale">
+      <div class="phase-header">
+        <div class="phase-num" style="color:var(--orange)">05</div>
+        <div class="phase-info">
+          <div class="phase-tag" style="background:rgba(255,140,66,.1);color:var(--orange)">FASE 5 — SCALE & AUTOMASI</div>
+          <div class="phase-title">Skala Tanpa Batas</div>
+          <div class="phase-desc">Semua 3 Stage sudah reliable dan menghasilkan. Sekarang saatnya scale: lebih banyak traffic, lebih banyak automation, lebih banyak reinvestment.</div>
+        </div>
+      </div>
+      <div class="roadmap-steps">
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--orange);border-color:var(--orange)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Otomasi Stage I (Attraction)</h4>
+            <p>Buat ad funnel yang berjalan sendiri. Email/SMS sequence otomatis setelah opt-in. CRM untuk track seluruh pipeline. Iklan berbayar untuk scale lead generation. Target: 100+ leads per hari berjalan otomatis.</p>
+            <div class="step-tags"><span class="step-tag">Ad Funnels</span><span class="step-tag">Email Automation</span><span class="step-tag">CRM</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--orange);border-color:var(--orange)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Hiring Untuk Scale</h4>
+            <p>Hire sales team untuk handle upsell calls. Hire fulfillment team untuk deliver product. Hire CS team untuk retention. Hormozi: kamu tidak bisa scale jika kamu adalah bottleneck. Sistem + orang yang tepat = exponential growth.</p>
+            <div class="step-tags"><span class="step-tag">Sales Team</span><span class="step-tag">Fulfillment</span><span class="step-tag">Customer Success</span></div>
+          </div>
+        </div>
+        <div class="roadmap-step">
+          <div class="step-line"><div class="step-dot" style="background:var(--orange);border-color:var(--orange)"></div><div class="step-connector"></div></div>
+          <div class="step-content">
+            <h4>Reinvest Cash Flow ke Pertumbuhan</h4>
+            <p>Karena kamu cover CAC dalam 30 hari, setiap bulan ada cash baru yang bisa diinvestasikan ke lebih banyak iklan. Ini compound effect. Hormozi dari 1 gym → 6 gym → Gym Launch → $46.2M exit — semua karena reinvest secara agresif.</p>
+            <div class="step-tags"><span class="step-tag">Cash Flow Reinvestment</span><span class="step-tag">Portfolio Building</span><span class="step-tag">Compound Growth</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FULL MONEY MODEL OVERVIEW -->
+    <div class="divider reveal"></div>
+    <div class="sec-header reveal">
+      <div class="sec-tag">Visualisasi</div>
+      <h2 class="sec-title">Seluruh Money Model dalam Satu View</h2>
+    </div>
+
+    <div class="stage-card reveal" style="background:rgba(255,65,54,.04);border-color:rgba(255,65,54,.2);">
+      <div class="stage-flow-badge" style="background:rgba(255,65,54,.1);color:var(--red)">STAGE I</div>
+      <h3>Attraction — Dapatkan Pelanggan</h3>
+      <p class="goal">Goal: Orang asing → pelanggan berbayar → CAC lunas dalam 30 hari</p>
+      <div class="stage-offers">
+        <span class="offer-pill" style="background:rgba(255,65,54,.08);border-color:rgba(255,65,54,.25);color:var(--red)">Win Your Money Back</span>
+        <span class="offer-pill" style="background:rgba(255,65,54,.08);border-color:rgba(255,65,54,.25);color:var(--red)">Giveaway</span>
+        <span class="offer-pill" style="background:rgba(255,65,54,.08);border-color:rgba(255,65,54,.25);color:var(--red)">Decoy Offer</span>
+        <span class="offer-pill" style="background:rgba(255,65,54,.08);border-color:rgba(255,65,54,.25);color:var(--red)">Buy X Get Y Free</span>
+        <span class="offer-pill" style="background:rgba(255,65,54,.08);border-color:rgba(255,65,54,.25);color:var(--red)">Pay Less Now/More Later</span>
+        <span class="offer-pill" style="background:rgba(255,65,54,.08);border-color:rgba(255,65,54,.25);color:var(--red)">Free Goodwill</span>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;color:var(--muted);font-size:24px;margin:4px 0;">↓</div>
+
+    <div class="stage-card reveal" style="background:rgba(74,158,255,.04);border-color:rgba(74,158,255,.2);">
+      <div class="stage-flow-badge" style="background:rgba(74,158,255,.1);color:var(--blue)">STAGE II-A</div>
+      <h3>Upsell — Maksimalkan Cash</h3>
+      <p class="goal">Goal: Pelanggan spend 2-4x lebih banyak dari pembelian pertama</p>
+      <div class="stage-offers">
+        <span class="offer-pill" style="background:rgba(74,158,255,.08);border-color:rgba(74,158,255,.25);color:var(--blue)">Classic Upsell</span>
+        <span class="offer-pill" style="background:rgba(74,158,255,.08);border-color:rgba(74,158,255,.25);color:var(--blue)">Menu Upsell</span>
+        <span class="offer-pill" style="background:rgba(74,158,255,.08);border-color:rgba(74,158,255,.25);color:var(--blue)">Anchor Upsell</span>
+        <span class="offer-pill" style="background:rgba(74,158,255,.08);border-color:rgba(74,158,255,.25);color:var(--blue)">Rollover Upsell</span>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;color:var(--muted);font-size:18px;margin:4px 0;">↕ (jika decline upsell)</div>
+
+    <div class="stage-card reveal" style="background:rgba(155,89,255,.04);border-color:rgba(155,89,255,.2);">
+      <div class="stage-flow-badge" style="background:rgba(155,89,255,.1);color:var(--purple)">STAGE II-B</div>
+      <h3>Downsell — Ubah NO jadi YES</h3>
+      <p class="goal">Goal: Tidak ada yang keluar tanpa membeli sesuatu</p>
+      <div class="stage-offers">
+        <span class="offer-pill" style="background:rgba(155,89,255,.08);border-color:rgba(155,89,255,.25);color:var(--purple)">Payment Plan</span>
+        <span class="offer-pill" style="background:rgba(155,89,255,.08);border-color:rgba(155,89,255,.25);color:var(--purple)">Trial With Penalty</span>
+        <span class="offer-pill" style="background:rgba(155,89,255,.08);border-color:rgba(155,89,255,.25);color:var(--purple)">Feature Downsell</span>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:center;color:var(--muted);font-size:24px;margin:4px 0;">↓</div>
+
+    <div class="stage-card reveal" style="background:rgba(46,204,113,.04);border-color:rgba(46,204,113,.2);">
+      <div class="stage-flow-badge" style="background:rgba(46,204,113,.1);color:var(--green)">STAGE III</div>
+      <h3>Continuity — Recurring Revenue Selamanya</h3>
+      <p class="goal">Goal: Pelanggan bayar setiap bulan — LTV maksimum</p>
+      <div class="stage-offers">
+        <span class="offer-pill" style="background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.25);color:var(--green)">Continuity Bonus</span>
+        <span class="offer-pill" style="background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.25);color:var(--green)">Continuity Discount</span>
+        <span class="offer-pill" style="background:rgba(46,204,113,.08);border-color:rgba(46,204,113,.25);color:var(--green)">Waived Fee</span>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /page roadmap -->
+
+<!-- ===== PAGE: ATTRACTION ===== -->
+<div class="page" id="page-attraction">
+  <div class="container">
+    <div class="sec-header reveal" style="margin-top:20px;">
+      <div class="sec-tag">Section II</div>
+      <h2 class="sec-title">Attraction Offers</h2>
+      <p class="sec-desc">Ubah orang asing jadi pelanggan berbayar. Selalu ada elemen gratis/diskon. Tujuan: CAC kembali dalam 30 hari.</p>
+    </div>
+
+    <div class="big-quote reveal">"Semakin besar diskon = semakin besar daya tarik. Free adalah diskon terbesar."</div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+
+      <div class="card reveal" id="ao-wmb" style="border-left:4px solid var(--red);">
+        <div class="card-tag tag-red">Attraction #1</div>
+        <h3>💰 Win Your Money Back</h3>
+        <p>Deposit uang, capai tujuan, dapatkan kembali. $1 miliar+ industry-wide. Hanya 10% refund rate. Yang sukses biasanya stay dan beli lebih.</p>
+        <div class="formula-box" style="margin-top:12px;">Deposit → Criteria (Results/Actions/Both) → Win = Cash/Store Credit</div>
+        <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:var(--surface2);padding:12px;border-radius:8px;font-size:12px;color:var(--muted);">✅ Terbaik untuk: bisnis yang butuh pelanggan konsisten (gym, coaching, courses)</div>
+          <div style="background:var(--surface2);padding:12px;border-radius:8px;font-size:12px;color:var(--muted);">⚠️ Hanya gunakan jika refund rate produk &lt;5%</div>
+        </div>
+      </div>
+
+      <div class="card reveal" id="ao-giveaway" style="border-left:4px solid var(--orange);">
+        <div class="card-tag tag-orange">Attraction #2</div>
+        <h3>🎁 Giveaways</h3>
+        <p>1 grand prize winner, ratusan "partial scholarship" untuk semua lainnya. Semua orang kualifikasi untuk promo offer. Leads gratis yang sudah qualified karena enter untuk grand prize.</p>
+        <div class="formula-box" style="margin-top:12px;">Grand Prize (1 winner) + Promo Offer untuk semua → Konversi masif</div>
+      </div>
+
+      <div class="card reveal" id="ao-decoy" style="border-left:4px solid var(--gold);">
+        <div class="card-tag tag-gold">Attraction #3</div>
+        <h3>🎭 Decoy Offer</h3>
+        <p>Versi murah/gratis yang membuat orang mencoba, lalu upsell ke premium. Mirip printer model — decoy masuk, ink (premium) yang menghasilkan. Konsultasi gratis → jual pakej coaching.</p>
+      </div>
+
+      <div class="card reveal" id="ao-bxgy" style="border-left:4px solid var(--cyan);">
+        <div class="card-tag tag-cyan">Attraction #4</div>
+        <h3>🛍️ Buy X Get Y Free</h3>
+        <p>"Free" membuat orang override keberatan harga. Terbaik jika Y memperkenalkan ke kategori produk baru yang bisa di-upsell. Pilih Y yang cost rendah untuk bisnis tapi nilai tinggi untuk pelanggan.</p>
+      </div>
+
+      <div class="card reveal" id="ao-plnpl" style="border-left:4px solid var(--purple);">
+        <div class="card-tag tag-purple">Attraction #5</div>
+        <h3>⏳ Pay Less Now or Pay More Later</h3>
+        <p>Bayar lebih murah sekarang (lock in), atau harga penuh nanti. Memaksa komitmen awal dengan low risk. "Bayar $97 hari ini atau $197 jika kamu ingin lanjut minggu depan."</p>
+      </div>
+
+      <div class="card reveal" id="ao-fgo" style="border-left:4px solid var(--pink);">
+        <div class="card-tag tag-pink">Attraction #6</div>
+        <h3>❤️ Free Goodwill Offer</h3>
+        <p>Give genuine value tanpa agenda. Bangun trust, goodwill, dan desire. Terbaik untuk cold traffic dan brand building. Free training, tool, atau consultation — no strings attached tapi always have a next step ready.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: UPSELL ===== -->
+<div class="page" id="page-upsell">
+  <div class="container">
+    <div class="sec-header reveal" style="margin-top:20px;">
+      <div class="sec-tag">Section III</div>
+      <h2 class="sec-title">Upsell Offers</h2>
+      <p class="sec-desc">Buat pelanggan yang sudah beli untuk spend lebih banyak. Timing adalah segalanya — tawarkan saat momentum pembelian masih panas.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card reveal" id="uo-classic" style="border-left:4px solid var(--blue);">
+        <div class="card-tag tag-blue">Upsell #1</div>
+        <h3>🏆 Classic Upsell</h3>
+        <p>Tawarkan lebih dari hal yang sama: lebih banyak unit, ukuran besar, tier premium. Formula: bicara masalah → tawarkan solusi → diam dan tunggu. Sederhana tapi menghasilkan 40-60% lebih banyak revenue per customer.</p>
+      </div>
+
+      <div class="card reveal" id="uo-menu" style="border-left:4px solid var(--cyan);">
+        <div class="card-tag tag-cyan">Upsell #2</div>
+        <h3>📋 Menu Upsell (UNSELL Framework)</h3>
+        <p>Diagnosa dulu, lalu prescribe. Tunjukkan menu opsi dari termahal ke paling murah. Framework: Uncover → Need → Suggest → Explain → Let decide → Last chance. Selalu mulai dari yang paling mahal.</p>
+        <div class="formula-box" style="margin-top:12px;">U-N-S-E-L-L: Uncover → Need → Suggest → Explain → Let Decide → Last Chance</div>
+      </div>
+
+      <div class="card reveal" id="uo-anchor" style="border-left:4px solid var(--gold);">
+        <div class="card-tag tag-gold">Upsell #3</div>
+        <h3>⚓ Anchor Upsell</h3>
+        <p>Tunjukkan harga sangat tinggi dulu sebagai anchor, lalu reveal harga sebenarnya. Otak bandingkan relatif bukan absolut. "$10,000 value... tapi hari ini hanya $2,000." Meningkatkan perceived value dramatically.</p>
+      </div>
+
+      <div class="card reveal" id="uo-rollover" style="border-left:4px solid var(--green);">
+        <div class="card-tag tag-green">Upsell #4</div>
+        <h3>🔄 Rollover Upsell</h3>
+        <p>Gunakan store credit/winnings dari Win Your Money Back untuk roll ke paket lebih besar. Spread kredit over waktu — bukan 3 bulan gratis, tapi diskon tiap bulan selama 12 bulan. Pelanggan stay, kamu dapat recurring.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: DOWNSELL ===== -->
+<div class="page" id="page-downsell">
+  <div class="container">
+    <div class="sec-header reveal" style="margin-top:20px;">
+      <div class="sec-tag">Section IV</div>
+      <h2 class="sec-title">Downsell Offers</h2>
+      <p class="sec-desc">Ubah "tidak" jadi "ya". BUKAN menurunkan harga untuk hal yang sama — ubah apa yang mereka dapat.</p>
+    </div>
+
+    <div class="big-quote reveal">"Terlalu mahal biasanya berarti terlalu mahal SEKARANG. Downsell solve itu."</div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card reveal" id="do-payment" style="border-left:4px solid var(--purple);">
+        <div class="card-tag tag-purple">Downsell #1</div>
+        <h3>💳 Payment Plan Downsell</h3>
+        <p>Bayar lebih sedikit per bulan, total lebih banyak. Hormozi 7-step: tanya masalah → empati → present offer → address concern → payment plan → deadline → final close. Selalu charge sedikit lebih untuk installment (admin fee).</p>
+        <div class="formula-box" style="margin-top:12px;">Contoh: $2000 lump sum → $297/bulan × 8 bulan = $2,376 (kamu dapat lebih!)</div>
+      </div>
+
+      <div class="card reveal" id="do-trial" style="border-left:4px solid var(--orange);">
+        <div class="card-tag tag-orange">Downsell #2</div>
+        <h3>⏱️ Trial With Penalty</h3>
+        <p>Trial murah/gratis dengan "penalty" jika cancel setelah trial. Berbeda dari free trial biasa — ada skin in the game. "$1 sekarang, auto-charge $297 setelah 7 hari jika tidak cancel." Meningkatkan commitment dan menurunkan churn.</p>
+      </div>
+
+      <div class="card reveal" id="do-feature" style="border-left:4px solid var(--blue);">
+        <div class="card-tag tag-blue">Downsell #3</div>
+        <h3>🔧 Feature Downsell</h3>
+        <p>Kurangi fitur untuk buat versi lebih murah. Bukan diskon — ini literally produk berbeda (lite version). Group vs 1-on-1. Software basic vs premium. Biarkan masuk dengan harga rendah, upsell kemudian setelah mereka lihat value.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: CONTINUITY ===== -->
+<div class="page" id="page-continuity">
+  <div class="container">
+    <div class="sec-header reveal" style="margin-top:20px;">
+      <div class="sec-tag">Section V</div>
+      <h2 class="sec-title">Continuity Offers</h2>
+      <p class="sec-desc">Recurring revenue adalah holy grail bisnis. Jual bonusnya, bukan membership-nya.</p>
+    </div>
+
+    <div class="formula-box reveal" style="font-size:15px;">LTV = Harga Bulanan ÷ Churn Rate &nbsp;&nbsp;|&nbsp;&nbsp; Churn 5% → Avg Retention 20 bulan</div>
+
+    <div style="display:flex;flex-direction:column;gap:20px;margin-top:24px;">
+      <div class="card reveal" id="co-bonus" style="border-left:4px solid var(--green);">
+        <div class="card-tag tag-green">Continuity #1</div>
+        <h3>🎁 Continuity Bonus Offers</h3>
+        <p>Bonus bulan pertama bernilai 3-5x harga membership. Orang join untuk bonus, stay karena value ongoing. Spread bonus over beberapa bulan — tiap bulan ada excitement baru. Bonus bisa: content eksklusif, live calls, early access, mastermind.</p>
+      </div>
+
+      <div class="card reveal" id="co-discount" style="border-left:4px solid var(--blue);">
+        <div class="card-tag tag-blue">Continuity #2</div>
+        <h3>🏷️ Continuity Discount Offers</h3>
+        <p>Bayar 10 bulan, dapat 2 gratis. Pre-pay setahun dengan diskon besar. Kamu dapat cash upfront dan cash flow predictable. Pelanggan dapat deal menarik. Terbaik jika kamu butuh modal untuk grow.</p>
+      </div>
+
+      <div class="card reveal" id="co-waived" style="border-left:4px solid var(--gold);">
+        <div class="card-tag tag-gold">Continuity #3</div>
+        <h3>✨ Waived Fee Offer</h3>
+        <p>Hapus setup/enrollment fee jika mulai recurring sekarang. Buat urgency yang genuine: "Setup fee biasanya $500 — tapi jika mulai hari ini, kami hapus." Kombinasi urgency + tangible saving = konversi tinggi.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: MONEY MODEL ===== -->
+<div class="page" id="page-model">
+  <div class="container">
+    <div class="sec-header reveal" style="margin-top:20px;">
+      <div class="sec-tag">Section VI</div>
+      <h2 class="sec-title">Build Your $100M Money Model</h2>
+      <p class="sec-desc">Semua pelajaran dalam satu framework yang bisa diimplementasi mulai hari ini.</p>
+    </div>
+
+    <div id="mm-overview">
+      <div class="grid-3 reveal" style="margin-bottom:32px;">
+        <div class="card" style="border-top:3px solid var(--red);">
+          <div class="card-tag tag-red">Stage I</div>
+          <h3>Get Cash</h3>
+          <p>Attraction Offers → Strangers jadi customers. Cover CAC dalam 30 hari. Tanpa ini, semua tahap lain tidak berguna.</p>
+        </div>
+        <div class="card" style="border-top:3px solid var(--blue);">
+          <div class="card-tag tag-blue">Stage II</div>
+          <h3>Get More Cash</h3>
+          <p>Upsell + Downsell → Maksimalkan revenue per customer. Ubah 1 transaksi jadi 2-4 transaksi.</p>
+        </div>
+        <div class="card" style="border-top:3px solid var(--green);">
+          <div class="card-tag tag-green">Stage III</div>
+          <h3>Get The Most Cash</h3>
+          <p>Continuity Offers → Lock in recurring revenue. Tiap bulan mulai dari base yang makin besar.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="mm-10in10" class="reveal">
+      <div class="sec-header">
+        <div class="sec-tag">Ten Years in Ten Minutes</div>
+        <h2 class="sec-title">10 Prinsip Emas Hormozi</h2>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="principle-item">
+          <div class="prin-num">01</div>
+          <div class="prin-body"><h4>Stage I Dulu, Baru Stage II, Baru Stage III</h4><p>Jangan skip. Setiap stage harus proven dan reliable sebelum lanjut. Bisnis yang mati biasanya karena skip ke Stage III sebelum Stage I profitable.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">02</div>
+          <div class="prin-body"><h4>Cover CAC dalam 30 Hari</h4><p>Ini satu-satunya target finansial paling penting. Jika bisa, kamu bisa scale tanpa batas menggunakan revolving credit.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">03</div>
+          <div class="prin-body"><h4>Jangan Turunkan Harga — Ubah Apa yang Mereka Dapat</h4><p>Downsell = kurangi fitur. Bukan diskon dari produk yang sama. Menurunkan harga mendegradasi value perception permanen.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">04</div>
+          <div class="prin-body"><h4>Pelanggan Saat Ini Adalah Emas</h4><p>Probability menjual ke pelanggan existing 6-7x lebih tinggi. Selalu punya offer berikutnya siap. Jangan biarkan pelanggan pergi tanpa tawaran lanjutan.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">05</div>
+          <div class="prin-body"><h4>Hard Selling = Produk Lemah</h4><p>Offer yang tepat pada waktu yang tepat tidak memerlukan hard selling. Buat offer available saat pelanggan menghadapi masalah spesifik.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">06</div>
+          <div class="prin-body"><h4>Jual Bonusnya, Bukan Membership-nya</h4><p>Untuk Continuity: bonus bulan pertama harus lebih valuable dari harga membership. Orang join untuk bonus, stay untuk nilai ongoing.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">07</div>
+          <div class="prin-body"><h4>Meeting = Opportunity to Offer</h4><p>Setiap check-in, orientasi, atau feedback session adalah peluang untuk offer yang relevan. Jadikan meeting sebagai syarat win-back.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">08</div>
+          <div class="prin-body"><h4>Be Transparent. Never Lie.</h4><p>Reputasi buruk tidak bisa di-bankrupt. State facts. Jika facts tidak compelling, ubah reality atau cara framing — bukan kebohongan.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">09</div>
+          <div class="prin-body"><h4>Otomasi Setelah Terbukti</h4><p>Jangan otomasi yang belum proven. Pertama manual, fine-tune, lalu otomasi. Automation dari sistem yang buruk hanya mempercepat kegagalan.</p></div>
+        </div>
+        <div class="principle-item">
+          <div class="prin-num">10</div>
+          <div class="prin-body"><h4>Sistem Lebih Penting dari Produk</h4><p>Rental car girl dengan $19 car mengalahkan bisnis dengan produk lebih baik — karena sistemnya lebih baik. Build the system, let the system work.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider reveal"></div>
+
+    <div id="mm-examples" class="reveal">
+      <div class="sec-header">
+        <div class="sec-tag">Real Examples</div>
+        <h2 class="sec-title">Money Model dalam Berbagai Bisnis</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" style="border-top:3px solid var(--red);">
+          <div class="card-tag tag-red">Fitness / Gym</div>
+          <h3>Contoh: Gym Launch</h3>
+          <p><strong style="color:var(--text);">Stage I:</strong> Win Your Money Back — Free 6 Week Challenge, bayar kembali jika capai tujuan.<br><br><strong style="color:var(--text);">Stage II:</strong> Classic Upsell ke membership tahunan. Credit dari win-back applied ke annual plan.<br><br><strong style="color:var(--text);">Stage III:</strong> Monthly membership dengan bonus konten eksklusif dan group calls.</p>
+        </div>
+
+        <div class="card" style="border-top:3px solid var(--blue);">
+          <div class="card-tag tag-blue">Car Rental</div>
+          <h3>Contoh: Rental Car Classic</h3>
+          <p><strong style="color:var(--text);">Stage I:</strong> $19/day car — Attraction Offer masif.<br><br><strong style="color:var(--text);">Stage II:</strong> Upgrade ke truk, late return, premium insurance, prepaid gas — 5 upsells berurutan.<br><br><strong style="color:var(--text);">Hasil:</strong> $19 → $100/day. 5x lipat dari satu sequence offer yang solve real problems.</p>
+        </div>
+
+        <div class="card" style="border-top:3px solid var(--green);">
+          <div class="card-tag tag-green">Storage Business</div>
+          <h3>Contoh: Storage Mentor</h3>
+          <p><strong style="color:var(--text);">Stage I:</strong> Free first month of storage — Attraction Offer yang irresistible.<br><br><strong style="color:var(--text);">Stage II:</strong> Lock → Boxes → Tape/labels → Moving tools → Insurance → Unit upgrade.<br><br><strong style="color:var(--text);">Hasil:</strong> Free month = $127. Classic Money Model: solve setiap masalah yang muncul.</p>
+        </div>
+
+        <div class="card" style="border-top:3px solid var(--gold);">
+          <div class="card-tag tag-gold">Certification Business</div>
+          <h3>Contoh: Fitness Certification</h3>
+          <p><strong style="color:var(--text);">Stage I:</strong> Giveaway — scholarship penuh untuk program sertifikasi.<br><br><strong style="color:var(--text);">Stage II:</strong> Semua yang tidak menang grand prize = "partial scholarship" dengan diskon ke program utama.<br><br><strong style="color:var(--text);">Hasil:</strong> Ratusan qualified leads yang langsung convert karena mereka sudah qualified sendiri.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="big-quote reveal" style="margin-top:40px;">"Kamu tidak akan pernah kalah jika tidak berhenti mencoba."</div>
+
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ===== STATE =====
+let currentPage = 'ringkasan';
+let readPages = new Set(['ringkasan']);
+const pageNames = ['ringkasan','roadmap','attraction','upsell','downsell','continuity','model'];
+
+// ===== SIDEBAR TOGGLE =====
+function toggleSidebar(){
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('sidebar-overlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('show');
+}
+
+// ===== SIDEBAR SECTION TOGGLE =====
+function toggleSbSection(id){
+  const section = document.getElementById(id);
+  section.classList.toggle('open');
+}
+
+// ===== PAGE NAVIGATION =====
+function showPage(id){
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tnav-btn').forEach(b => b.classList.remove('active'));
+
+  // Show target page
+  const page = document.getElementById('page-'+id);
+  if(page){
+    page.classList.add('active');
+    currentPage = id;
+    readPages.add(id);
+    updateProgress();
+    // Activate nav button
+    const btn = document.querySelector(`.tnav-btn[onclick="showPage('${id}')"]`);
+    if(btn){ btn.classList.add('active'); btn.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'}); }
+    window.scrollTo(0,0);
+    // Trigger reveals
+    setTimeout(() => {
+      page.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+    }, 50);
+  }
+}
+
+function navTo(pageId, anchorId){
+  showPage(pageId);
+  setTimeout(() => {
+    const el = document.getElementById(anchorId);
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    // Close sidebar on mobile
+    if(window.innerWidth < 900) toggleSidebar();
+  }, 100);
+}
+
+// ===== PROGRESS =====
+function updateProgress(){
+  const total = pageNames.length;
+  const done = readPages.size;
+  const pct = Math.round(done/total*100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-pct').textContent = `${done} / ${total} bagian`;
+}
+
+// ===== CHAPTER TOGGLE =====
+function toggleChapter(btn){
+  const card = btn.closest('.chapter-card');
+  card.classList.toggle('open');
+}
+
+// ===== REVEAL OBSERVER =====
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.06});
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+  // Observe initial page
+  document.getElementById('page-ringkasan').querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Scroll-based sidebar active item
+  updateProgress();
+});
+</script>
+</body>
+</html>
